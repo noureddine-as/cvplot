@@ -5,7 +5,7 @@
 namespace demo {
 
 void example() {
-  cvplot::figure("myplot").series("myline").addValue({1.f, 3.f, 2.f, 5.f, 4.f});
+  cvplot::figure("myplot").series("myline").addValue({1.f, 3.f, 2.f, 5.f, 4.f, 5.6f, 5.6f, 5.6f, 5.6f, 5.6f});
   cvplot::figure("myplot").show();
 }
 
@@ -340,8 +340,40 @@ void transparency() {
 }  // namespace demo
 
 int main(int argc, char **argv) {
-  demo::example();
-  demo::transparency();
-  demo::demo();
+  std::vector<std::pair<float, float>> data;
+  std::vector<float> values;
+
+  auto name = "dynamic";
+  cvplot::setWindowTitle(name, "dynamic plotting");
+  cvplot::resizeWindow(name, 800, 300);
+  auto &view = cvplot::Window::current().view(name);
+  auto &figure = cvplot::figure(name);
+  figure.square(true);
+  figure.origin(false, false);
+
+
+  for (int i = 0; i < 1000; i++) {
+    if (i >= 300 ){
+      data.erase(data.begin());
+    }
+
+    data.push_back({(float)i/10, cos(i * 0.1f ) * 5});
+
+    figure.series("random")
+        .set(data)
+        .type(cvplot::DotLine)
+        .color(cvplot::Red);
+
+
+    figure.show(false);
+    view.finish();
+    view.flush();
+
+    cv::waitKey(50);
+
+  }
+
+  cv::waitKey(0);
+
   return 0;
 }

@@ -60,6 +60,12 @@ class Series {
   Series &add(float key, float value);
   Series &add(float key, Point2 value);
   Series &add(float key, Point3 value);
+
+  Series &popback(void);
+  Series &popfront(void);
+  float read_val(float i);
+  void print_sizes(void);
+
   Series &addValue(float value);
   Series &addValue(float value_a, float value_b);
   Series &addValue(float value_a, float value_b, float value_c);

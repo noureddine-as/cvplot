@@ -110,6 +110,82 @@ Series &Series::add(const std::vector<std::pair<float, Point2>> &data) {
   return *this;
 }
 
+Series &Series::popback() {
+
+  entries_.pop_back();
+
+  data_.pop_back();
+  data_.pop_back();
+  data_.pop_back();
+
+  return *this;
+}
+
+Series &Series::popfront() {
+
+  entries_.erase(entries_.begin() );
+
+  // data_.erase(data_.begin() );
+  // data_.erase(data_.begin() );
+  // data_.erase(data_.begin() );
+
+  data_.erase (data_.begin(),data_.begin()+3);
+
+  return *this;
+}
+
+// Series &Series::addX(float x, float y) {
+//   ensureDimsDepth(1, 2);
+
+//   entries_.erase(entries_.begin() );
+//   data_.erase (data_.begin(),data_.begin()+3);
+  
+//   entries_.push_back(1);
+//   data_.push_back(x);
+//   data_.push_back(x);
+//   data_.push_back(y);
+
+//   return *this;
+// }
+
+auto once = false;
+void Series::print_sizes(void)
+{
+  if(!once){
+  printf("----------------------------------------------------\n"); 
+  for(auto i = 0; i < entries_.size(); i++)
+    printf("entries_[%i] = %f \n", i, entries_.at(i));
+  for(auto i = 0; i < data_.size(); i++)
+    printf("data_[%i] = %f \n", i, data_.at(i));
+//  printf("----------------------------------------------------");
+  printf("entries_.size() = %d \n", entries_.size());
+  printf("data_.size() = %d \n", data_.size());
+  printf("----------------------------------------------------\n");
+  once = true;
+}
+}
+
+float Series::read_val(float j)
+{
+  printf("entries_.size() = %d \n", entries_.size());
+  printf("data_.size() = %d \n", data_.size());
+
+  for(auto i = 0; i<entries_.size(); i+=3)
+  {
+    printf("%d      %d      %d", entries_.at(i), \
+                                 entries_.at(i+1), \
+                                 entries_.at(i+2));
+  }
+
+  return 0.f;
+
+  // data_.erase(data_.begin() );
+  // data_.erase(data_.begin() );
+  // data_.erase(data_.begin() );
+}
+
+
+
 Series &Series::add(const std::vector<std::pair<float, Point3>> &data) {
   ensureDimsDepth(1, 3);
   for (const auto &d : data) {
